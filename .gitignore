@@ -1,6 +1,9 @@
 s# Visual Studio 2015 user specific files
 .vs/
 
+#rider specific Files
+*.idea
+
 # Compiled Object files
 *.slo
 *.lo
@@ -73,7 +76,3 @@ Plugins/**/Intermediate/**
 
 # Cache files for the editor to use
 DerivedDataCache/*
-
-# Wwise specific
-!Plugins/wwise/**/*.dll
-!Plugins/wwise/**/*.lib
