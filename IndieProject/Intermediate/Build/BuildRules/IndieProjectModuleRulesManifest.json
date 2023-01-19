@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Forsbergsskola\\Unreal\\IndieProject\\IndieProject\\Plugins\\SaveExtension\\Source\\Editor\\SaveExtensionEditor.Build.cs",
+		"C:\\Forsbergsskola\\Unreal\\IndieProject\\IndieProject\\Plugins\\SaveExtension\\Source\\SaveExtension\\SaveExtension.Build.cs",
+		"C:\\Forsbergsskola\\Unreal\\IndieProject\\IndieProject\\Plugins\\SaveExtension\\Source\\Test\\SaveExtensionTest.Build.cs"
+	],
+	"EngineVersion": "5.1.0"
+}

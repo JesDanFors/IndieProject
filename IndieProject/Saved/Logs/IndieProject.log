@@ -1,0 +1,341 @@
+﻿Log file open, 01/19/23 05:46:01
+LogConfig: Display: Loading Android ini files took 0.03 seconds
+LogConfig: Display: Loading Mac ini files took 0.03 seconds
+LogConfig: Display: Loading IOS ini files took 0.03 seconds
+LogConfig: Display: Loading HoloLens ini files took 0.03 seconds
+LogConfig: Display: Loading VulkanPC ini files took 0.03 seconds
+LogConfig: Display: Loading Unix ini files took 0.03 seconds
+LogConfig: Display: Loading Windows ini files took 0.04 seconds
+LogConfig: Display: Loading TVOS ini files took 0.04 seconds
+LogConfig: Display: Loading Linux ini files took 0.04 seconds
+LogConfig: Display: Loading LinuxArm64 ini files took 0.04 seconds
+LogPluginManager: Warning: Plugin 'SaveExtension' requires engine version '4.25.0' and may not be compatible with the current current engine version '5.1.0-23058290+++UE5+Release-5.1'
+Message dialog closed, result: Yes, title: 'SaveExtension' is Incompatible, text: The 'SaveExtension' plugin was designed for build 4.25.0. Attempt to load it anyway?
+LogPluginManager: Mounting Engine plugin Bridge
+LogPluginManager: Mounting Engine plugin EnhancedInput
+LogPluginManager: Mounting Engine plugin MeshPainting
+LogPluginManager: Mounting Engine plugin FastBuildController
+LogPluginManager: Mounting Engine plugin TraceUtilities
+LogPluginManager: Mounting Engine plugin XGEController
+LogPluginManager: Mounting Engine plugin Paper2D
+LogPluginManager: Mounting Engine plugin ChaosClothEditor
+LogPluginManager: Mounting Engine plugin ChaosCaching
+LogPluginManager: Mounting Engine plugin ChaosNiagara
+LogPluginManager: Mounting Engine plugin ChaosCloth
+LogPluginManager: Mounting Engine plugin ChaosEditor
+LogPluginManager: Mounting Engine plugin AutomationUtils
+LogPluginManager: Mounting Engine plugin ChaosSolverPlugin
+LogPluginManager: Mounting Engine plugin BackChannel
+LogPluginManager: Mounting Engine plugin CharacterAI
+LogPluginManager: Mounting Engine plugin ChaosUserDataPT
+LogPluginManager: Mounting Engine plugin Dataflow
+LogPluginManager: Mounting Engine plugin GameFeatures
+LogPluginManager: Mounting Engine plugin GeometryCollectionPlugin
+LogPluginManager: Mounting Engine plugin Iris
+LogPluginManager: Mounting Engine plugin GeometryFlow
+LogPluginManager: Mounting Engine plugin FullBodyIK
+LogPluginManager: Mounting Engine plugin MeshLODToolset
+LogPluginManager: Mounting Engine plugin ModularGameplay
+LogPluginManager: Mounting Engine plugin OpenImageDenoise
+LogPluginManager: Mounting Engine plugin MeshModelingToolsetExp
+LogPluginManager: Mounting Engine plugin ProxyLODPlugin
+LogPluginManager: Mounting Engine plugin PlatformCrypto
+LogPluginManager: Mounting Engine plugin PythonScriptPlugin
+LogPluginManager: Mounting Engine plugin PlanarCut
+LogPluginManager: Mounting Engine plugin SkeletalReduction
+LogPluginManager: Mounting Engine plugin UVEditor
+LogPluginManager: Mounting Engine plugin AnimationModifierLibrary
+LogPluginManager: Mounting Engine plugin BlendSpaceMotionAnalysis
+LogPluginManager: Mounting Engine plugin ControlRigSpline
+LogPluginManager: Mounting Engine plugin ControlRig
+LogPluginManager: Mounting Engine plugin InterchangeTests
+LogPluginManager: Mounting Engine plugin IKRig
+LogPluginManager: Mounting Engine plugin AnimationSharing
+LogPluginManager: Mounting Engine plugin CodeLiteSourceCodeAccess
+LogPluginManager: Mounting Engine plugin CLionSourceCodeAccess
+LogPluginManager: Mounting Engine plugin KDevelopSourceCodeAccess
+LogPluginManager: Mounting Engine plugin DumpGPUServices
+LogPluginManager: Mounting Engine plugin NullSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PlasticSourceControl
+LogPluginManager: Mounting Engine plugin PixWinPlugin
+LogPluginManager: Mounting Engine plugin GitSourceControl
+LogPluginManager: Mounting Engine plugin PropertyAccessNode
+LogPluginManager: Mounting Engine plugin RiderSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PluginUtils
+LogPluginManager: Mounting Engine plugin PerforceSourceControl
+LogPluginManager: Mounting Engine plugin SubversionSourceControl
+LogPluginManager: Mounting Engine plugin TextureFormatOodle
+LogPluginManager: Mounting Engine plugin TraceDataFilters
+LogPluginManager: Mounting Engine plugin UObjectPlugin
+LogPluginManager: Mounting Engine plugin VisualStudioSourceCodeAccess
+LogPluginManager: Mounting Engine plugin VisualStudioCodeSourceCodeAccess
+LogPluginManager: Mounting Engine plugin XCodeSourceCodeAccess
+LogPluginManager: Mounting Engine plugin ActorSequence
+LogPluginManager: Mounting Engine plugin SequencerScripting
+LogPluginManager: Mounting Engine plugin TemplateSequence
+LogPluginManager: Mounting Engine plugin LevelSequenceEditor
+LogPluginManager: Mounting Engine plugin Niagara
+LogPluginManager: Mounting Engine plugin OnlineBase
+LogPluginManager: Mounting Engine plugin OnlineServices
+LogPluginManager: Mounting Engine plugin OnlineSubsystem
+LogPluginManager: Mounting Engine plugin OnlineSubsystemUtils
+LogPluginManager: Mounting Engine plugin OnlineSubsystemNull
+LogPluginManager: Mounting Engine plugin DatasmithContent
+LogPluginManager: Mounting Engine plugin GLTFExporter
+LogPluginManager: Mounting Engine plugin VariantManager
+LogPluginManager: Mounting Engine plugin ActorLayerUtilities
+LogPluginManager: Mounting Engine plugin AndroidDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin VariantManagerContent
+LogPluginManager: Mounting Engine plugin AndroidFileServer
+LogPluginManager: Mounting Engine plugin AppleMoviePlayer
+LogPluginManager: Mounting Engine plugin AndroidPermission
+LogPluginManager: Mounting Engine plugin AndroidMoviePlayer
+LogPluginManager: Mounting Engine plugin AppleImageUtils
+LogPluginManager: Mounting Engine plugin ArchVisCharacter
+LogPluginManager: Mounting Engine plugin AssetTags
+LogPluginManager: Mounting Engine plugin AudioCapture
+LogPluginManager: Mounting Engine plugin AudioSynesthesia
+LogPluginManager: Mounting Engine plugin CableComponent
+LogPluginManager: Mounting Engine plugin ChunkDownloader
+LogPluginManager: Mounting Engine plugin CustomMeshComponent
+LogPluginManager: Mounting Engine plugin AudioWidgets
+LogPluginManager: Mounting Engine plugin ExampleDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin DataRegistry
+LogPluginManager: Mounting Engine plugin GeometryCache
+LogPluginManager: Mounting Engine plugin GeometryProcessing
+LogPluginManager: Mounting Engine plugin GoogleCloudMessaging
+LogPluginManager: Mounting Engine plugin GooglePAD
+LogPluginManager: Mounting Engine plugin InputDebugging
+LogPluginManager: Mounting Engine plugin IOSDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin LocationServicesBPLibrary
+LogPluginManager: Mounting Engine plugin LinuxDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin MeshModelingToolset
+LogPluginManager: Mounting Engine plugin Metasound
+LogPluginManager: Mounting Engine plugin MobilePatchingUtils
+LogPluginManager: Mounting Engine plugin ProceduralMeshComponent
+LogPluginManager: Mounting Engine plugin PropertyAccessEditor
+LogPluginManager: Mounting Engine plugin SignificanceManager
+LogPluginManager: Mounting Engine plugin ResonanceAudio
+LogPluginManager: Mounting Engine plugin WaveTable
+LogPluginManager: Mounting Engine plugin Synthesis
+LogPluginManager: Mounting Engine plugin SoundFields
+LogPluginManager: Mounting Engine plugin WindowsDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin WebMMoviePlayer
+LogPluginManager: Mounting Engine plugin CameraShakePreviewer
+LogPluginManager: Mounting Engine plugin GameplayCameras
+LogPluginManager: Mounting Engine plugin WindowsMoviePlayer
+LogPluginManager: Mounting Engine plugin Takes
+LogPluginManager: Mounting Engine plugin AndroidMedia
+LogPluginManager: Mounting Engine plugin AvfMedia
+LogPluginManager: Mounting Engine plugin ImgMedia
+LogPluginManager: Mounting Engine plugin MediaCompositing
+LogPluginManager: Mounting Engine plugin MediaPlayerEditor
+LogPluginManager: Mounting Engine plugin WmfMedia
+LogPluginManager: Mounting Engine plugin WebMMedia
+LogPluginManager: Mounting Engine plugin InterchangeEditor
+LogPluginManager: Mounting Engine plugin Interchange
+LogPluginManager: Found config from plugin[Interchange] Game
+LogPluginManager: Mounting Engine plugin OodleNetwork
+LogPluginManager: Mounting Engine plugin MediaPlate
+LogPluginManager: Mounting Engine plugin LauncherChunkInstaller
+LogPluginManager: Mounting Engine plugin AssetManagerEditor
+LogPluginManager: Mounting Engine plugin AssetReferenceRestrictions
+LogPluginManager: Mounting Engine plugin BlueprintHeaderView
+LogPluginManager: Mounting Engine plugin CurveEditorTools
+LogPluginManager: Mounting Engine plugin CryptoKeys
+LogPluginManager: Mounting Engine plugin DataValidation
+LogPluginManager: Mounting Engine plugin FacialAnimation
+LogPluginManager: Mounting Engine plugin EditorDebugTools
+LogPluginManager: Mounting Engine plugin GameplayTagsEditor
+LogPluginManager: Mounting Engine plugin EditorScriptingUtilities
+LogPluginManager: Mounting Engine plugin GeometryMode
+LogPluginManager: Mounting Engine plugin GLTFImporter
+LogPluginManager: Mounting Engine plugin MacGraphicsSwitching
+LogPluginManager: Mounting Engine plugin MobileLauncherProfileWizard
+LogPluginManager: Mounting Engine plugin MaterialAnalyzer
+LogPluginManager: Mounting Engine plugin PluginBrowser
+LogPluginManager: Mounting Engine plugin ModelingToolsEditorMode
+LogPluginManager: Mounting Engine plugin StylusInput
+LogPluginManager: Mounting Engine plugin SpeedTreeImporter
+LogPluginManager: Mounting Engine plugin SequencerAnimTools
+LogPluginManager: Mounting Engine plugin WorldPartitionHLODUtilities
+LogPluginManager: Mounting Engine plugin AlembicImporter
+LogPluginManager: Mounting Engine plugin AISupport
+LogPluginManager: Mounting Engine plugin EnvironmentQueryEditor
+LogPluginManager: Mounting Engine plugin TcpMessaging
+LogPluginManager: Mounting Engine plugin UdpMessaging
+LogPluginManager: Mounting Engine plugin OnlineSubsystemIOS
+LogPluginManager: Mounting Engine plugin ContentBrowserAssetDataSource
+LogPluginManager: Mounting Engine plugin ContentBrowserClassDataSource
+LogPluginManager: Mounting Engine plugin ContentBrowserFileDataSource
+LogPluginManager: Mounting Engine plugin OnlineSubsystemGooglePlay
+LogPluginManager: Mounting Engine plugin ObjectMixer
+LogPluginManager: Mounting Engine plugin LightMixer
+LogPluginManager: Mounting Project plugin SaveExtension
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Bridge/Content/' mounted to '/Bridge/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/2D/Paper2D/Content/' mounted to '/Paper2D/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/ChaosClothEditor/Content/' mounted to '/ChaosClothEditor/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/ChaosCaching/Content/' mounted to '/ChaosCaching/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/ChaosNiagara/Content/' mounted to '/ChaosNiagara/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/ChaosSolverPlugin/Content/' mounted to '/ChaosSolverPlugin/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/Dataflow/Content/' mounted to '/Dataflow/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/GeometryCollectionPlugin/Content/' mounted to '/GeometryCollectionPlugin/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/GeometryFlow/Content/' mounted to '/GeometryFlow/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/FullBodyIK/Content/' mounted to '/FullBodyIK/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/MeshLODToolset/Content/' mounted to '/MeshLODToolset/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/MeshModelingToolsetExp/Content/' mounted to '/MeshModelingToolsetExp/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/PythonScriptPlugin/Content/' mounted to '/PythonScriptPlugin/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Experimental/UVEditor/Content/' mounted to '/UVEditor/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Animation/ControlRigSpline/Content/' mounted to '/ControlRigSpline/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Animation/ControlRig/Content/' mounted to '/ControlRig/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Animation/IKRig/Content/' mounted to '/IKRig/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Developer/AnimationSharing/Content/' mounted to '/AnimationSharing/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/MovieScene/SequencerScripting/Content/' mounted to '/SequencerScripting/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/FX/Niagara/Content/' mounted to '/Niagara/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Enterprise/DatasmithContent/Content/' mounted to '/DatasmithContent/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Enterprise/GLTFExporter/Content/' mounted to '/GLTFExporter/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/AudioSynesthesia/Content/' mounted to '/AudioSynesthesia/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/AudioWidgets/Content/' mounted to '/AudioWidgets/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/GeometryProcessing/Content/' mounted to '/GeometryProcessing/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/MeshModelingToolset/Content/' mounted to '/MeshModelingToolset/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/Metasound/Content/' mounted to '/Metasound/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/ResonanceAudio/Content/' mounted to '/ResonanceAudio/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/WaveTable/Content/' mounted to '/WaveTable/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Runtime/Synthesis/Content/' mounted to '/Synthesis/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/VirtualProduction/Takes/Content/' mounted to '/Takes/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Media/MediaCompositing/Content/' mounted to '/MediaCompositing/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Interchange/Runtime/Content/' mounted to '/Interchange/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Media/MediaPlate/Content/' mounted to '/MediaPlate/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/BlueprintHeaderView/Content/' mounted to '/BlueprintHeaderView/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/GeometryMode/Content/' mounted to '/GeometryMode/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/GLTFImporter/Content/' mounted to '/GLTFImporter/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/ModelingToolsEditorMode/Content/' mounted to '/ModelingToolsEditorMode/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/SpeedTreeImporter/Content/' mounted to '/SpeedTreeImporter/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/ObjectMixer/ObjectMixer/Content/' mounted to '/ObjectMixer/'
+LogPackageName: Display: FPackageName: Mount point added: '../../Plugins/Editor/ObjectMixer/LightMixer/Content/' mounted to '/LightMixer/'
+SourceControl: Source control is disabled
+SourceControl: Source control is disabled
+LogInit: Warning: Incompatible or missing module: SaveExtension
+LogInit: Warning: Incompatible or missing module: SaveExtensionEditor
+LogInit: Warning: Incompatible or missing module: SaveExtensionTest
+Running C:/Program Files/Epic Games/UE_5.1/Engine/Build/BatchFiles/Build.bat Development Win64 -Project="C:/Forsbergsskola/Unreal/IndieProject/IndieProject/IndieProject.uproject" -TargetType=Editor -Progress -NoEngineChanges -NoHotReloadFromIDE
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Development Win64 -Project="C:/Forsbergsskola/Unreal/IndieProject/IndieProject/IndieProject.uproject" -TargetType=Editor -Progress -NoEngineChanges -NoHotReloadFromIDE
+Log file: C:\Users\Jesper\AppData\Local\UnrealBuildTool\Log.txt
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform Win32 while parsing allow list for module descriptor SaveExtension
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform PS4 while parsing allow list for module descriptor SaveExtension
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform XboxOne while parsing allow list for module descriptor SaveExtension
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform Switch while parsing allow list for module descriptor SaveExtension
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform Win32 while parsing allow list for module descriptor SaveExtensionEditor
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform PS4 while parsing allow list for module descriptor SaveExtensionEditor
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform XboxOne while parsing allow list for module descriptor SaveExtensionEditor
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform Switch while parsing allow list for module descriptor SaveExtensionEditor
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\SaveExtension.uplugin: warning: Unknown platform Win32 while parsing allow list for module descriptor SaveExtensionTest
+Using 'git status' to determine working set for adaptive non-unity build (C:\Forsbergsskola\Unreal\IndieProject).
+Creating makefile for UnrealEditor (no existing makefile)
+@progress push 5%
+Parsing headers for UnrealEditor
+  Running Internal UnrealHeaderTool C:\Forsbergsskola\Unreal\IndieProject\IndieProject\IndieProject.uproject C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Intermediate\Build\Win64\UnrealEditor\Development\UnrealEditor.uhtmanifest -WarningsAsErrors -installed
+Total of 60 written
+Reflection code generated for UnrealEditor in 1.6607736 seconds
+@progress pop
+Building UnrealEditor...
+Using Visual Studio 2019 14.29.30146 toolchain (C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133) and Windows 10.0.19041.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB free memory per action, 4.85 GB available: limiting max parallel actions to 3
+Building 15 actions with 3 processes...
+[1/15] Resource Default.rc2
+[2/15] Resource Default.rc2
+[3/15] Resource Default.rc2
+[4/15] Compile SharedPCH.UnrealEd.ShadowErrors.cpp
+[5/15] Compile SharedPCH.Engine.ShadowErrors.cpp
+[6/15] Compile Module.SaveExtensionEditor.cpp
+C:\Program Files\Epic Games\UE_5.1\Engine\Source\Runtime\AssetRegistry\Public\AssetData.h(6): warning: #include AssetRegistry/AssetData.h instead of AssetData.h
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\Editor\Private\Customizations\ClassFilter\ClassFilterHelpers.h(11): fatal error C1083: Cannot open include file: 'Toolkits/AssetEditorManager.h': No such file or directory
+[7/15] Link UnrealEditor-SaveExtensionEditor.lib cancelled
+[8/15] Compile Module.SaveExtensionTest.cpp
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\Test\Private\Automatron.h(1423): warning C4996: 'UWorld::IsServer': Use GetNetMode or IsNetMode instead for more accurate results Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Public\SaveManager.h(580): warning C4996: 'UObjectBaseUtility::IsPendingKill': IsPendingKill() should no longer be used. Use IsValid(Object), IsValidChecked(Object) or GetValid(Object) instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+[9/15] Link UnrealEditor-SaveExtensionTest.lib
+   Creating library C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtensionTest\UnrealEditor-SaveExtensionTest.lib and object C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtensionTest\UnrealEditor-SaveExtensionTest.exp
+[10/15] Compile Module.SaveExtension.cpp
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Public\SaveManager.h(580): warning C4996: 'UObjectBaseUtility::IsPendingKill': IsPendingKill() should no longer be used. Use IsValid(Object), IsValidChecked(Object) or GetValid(Object) instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\FileAdapter.cpp(63): warning C4996: 'GPackageFileUE4Version': Use GPackageFileUEVersion instead. See the @FPackageFileVersion documentation for further details Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\FileAdapter.cpp(101): warning C4996: 'FArchiveState::SetUE4Ver': Use SetUEVer instead which takes the version as a FPackageFileVersion. See the @FPackageFileVersion documentation for further details Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\FileAdapter.cpp(303): warning C4996: ANY_PACKAGE has been deprecated. Either use full path name of objects (including classes) or provide a valid Outer for *FindObject* functions Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\Serialization\SlotDataTask.cpp(30): warning C4996: 'UObjectBaseUtility::MarkPendingKill': MarkPendingKill() should no longer be used. Use MarkAsGarbage() which will work just like MarkPendingKill() if Pending Kill support is enabled. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\SlotInfo.cpp(39): warning C4996: 'UTexture2D::PlatformData': Use GetPlatformData() / SetPlatformData() accessors instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Source\SaveExtension\Private\SlotInfo.cpp(41): warning C4996: 'UTexture2D::PlatformData': Use GetPlatformData() / SetPlatformData() accessors instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.
+[11/15] Link UnrealEditor-SaveExtension.lib
+   Creating library C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtension\UnrealEditor-SaveExtension.lib and object C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtension\UnrealEditor-SaveExtension.exp
+[12/15] Link UnrealEditor-SaveExtensionEditor.dll cancelled
+[13/15] Link UnrealEditor-SaveExtension.dll
+   Creating library C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtension\UnrealEditor-SaveExtension.suppressed.lib and object C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtension\UnrealEditor-SaveExtension.suppressed.exp
+Module.SaveExtension.cpp.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class UClass * __cdecl UDeveloperSettings::StaticClass(void)" (__imp_?StaticClass@UDeveloperSettings@@SAPEAVUClass@@XZ) referenced in function "private: static class UClass * __cdecl USaveSettings::GetPrivateStaticClass(void)" (?GetPrivateStaticClass@USaveSettings@@CAPEAVUClass@@XZ)
+  Hint on symbols that are defined and could potentially match:
+    "__declspec(dllimport) public: static class FFieldClass * __cdecl FBoolProperty::StaticClass(void)" (__imp_?StaticClass@FBoolProperty@@SAPEAVFFieldClass@@XZ)
+    "__declspec(dllimport) public: static class FFieldClass * __cdecl FIntProperty::StaticClass(void)" (__imp_?StaticClass@FIntProperty@@SAPEAVFFieldClass@@XZ)
+    "__declspec(dllimport) public: static class FFieldClass * __cdecl FNameProperty::StaticClass(void)" (__imp_?StaticClass@FNameProperty@@SAPEAVFFieldClass@@XZ)
+    "__declspec(dllimport) public: static class FFieldClass * __cdecl FObjectPropertyBase::StaticClass(void)" (__imp_?StaticClass@FObjectPropertyBase@@SAPEAVFFieldClass@@XZ)
+    "__declspec(dllimport) public: static class FFieldClass * __cdecl FStructProperty::StaticClass(void)" (__imp_?StaticClass@FStructProperty@@SAPEAVFFieldClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl UActorComponent::StaticClass(void)" (__imp_?StaticClass@UActorComponent@@SAPEAVUClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl UGameInstance::StaticClass(void)" (__imp_?StaticClass@UGameInstance@@SAPEAVUClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl UGameInstanceSubsystem::StaticClass(void)" (__imp_?StaticClass@UGameInstanceSubsystem@@SAPEAVUClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl UInterface::StaticClass(void)" (__imp_?StaticClass@UInterface@@SAPEAVUClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl UObject::StaticClass(void)" (__imp_?StaticClass@UObject@@SAPEAVUClass@@XZ)
+    "__declspec(dllimport) public: static class UClass * __cdecl USaveGame::StaticClass(void)" (__imp_?StaticClass@USaveGame@@SAPEAVUClass@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __cdecl UDeveloperSettings::UDeveloperSettings(class FVTableHelper &)" (__imp_??0UDeveloperSettings@@QEAA@AEAVFVTableHelper@@@Z) referenced in function "public: __cdecl USaveSettings::USaveSettings(class FVTableHelper &)" (??0USaveSettings@@QEAA@AEAVFVTableHelper@@@Z)
+Module.SaveExtension.cpp.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __cdecl UDeveloperSettings::~UDeveloperSettings(void)" (__imp_??1UDeveloperSettings@@UEAA@XZ) referenced in function "public: virtual __cdecl USaveSettings::~USaveSettings(void)" (??1USaveSettings@@UEAA@XZ)
+Module.SaveExtension.cpp.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __cdecl UDeveloperSettings::UDeveloperSettings(class FObjectInitializer const &)" (__imp_??0UDeveloperSettings@@QEAA@AEBVFObjectInitializer@@@Z) referenced in function "void __cdecl InternalConstructor<class USaveSettings>(class FObjectInitializer const &)" (??$InternalConstructor@VUSaveSettings@@@@YAXAEBVFObjectInitializer@@@Z)
+Module.SaveExtension.cpp.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) class UClass * __cdecl Z_Construct_UClass_UDeveloperSettings(void)" (__imp_?Z_Construct_UClass_UDeveloperSettings@@YAPEAVUClass@@XZ) referenced in function "void __cdecl `dynamic initializer for 'public: static class UObject * (__cdecl*const * const Z_Construct_UClass_USaveSettings_Statics::DependentSingletons)(void)''(void)" (??__E?DependentSingletons@Z_Construct_UClass_USaveSettings_Statics@@2QBQ6APEAVUObject@@XZB@@YAXXZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class FName __cdecl UDeveloperSettings::GetCategoryName(void)const " (?GetCategoryName@UDeveloperSettings@@UEBA?AVFName@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class FName __cdecl UDeveloperSettings::GetContainerName(void)const " (?GetContainerName@UDeveloperSettings@@UEBA?AVFName@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class TSharedPtr<class SWidget,1> __cdecl UDeveloperSettings::GetCustomSettingsWidget(void)const " (?GetCustomSettingsWidget@UDeveloperSettings@@UEBA?AV?$TSharedPtr@VSWidget@@$00@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class FText __cdecl UDeveloperSettings::GetSectionDescription(void)const " (?GetSectionDescription@UDeveloperSettings@@UEBA?AVFText@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class FName __cdecl UDeveloperSettings::GetSectionName(void)const " (?GetSectionName@UDeveloperSettings@@UEBA?AVFName@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual class FText __cdecl UDeveloperSettings::GetSectionText(void)const " (?GetSectionText@UDeveloperSettings@@UEBA?AVFText@@XZ)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl UDeveloperSettings::PostEditChangeProperty(struct FPropertyChangedEvent &)" (?PostEditChangeProperty@UDeveloperSettings@@UEAAXAEAUFPropertyChangedEvent@@@Z)
+Module.SaveExtension.cpp.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl UDeveloperSettings::SupportsAutoRegistration(void)const " (?SupportsAutoRegistration@UDeveloperSettings@@UEBA_NXZ)
+C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Binaries\Win64\UnrealEditor-SaveExtension.dll : fatal error LNK1120: 13 unresolved externals
+[14/15] Link UnrealEditor-SaveExtensionTest.dll
+   Creating library C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtensionTest\UnrealEditor-SaveExtensionTest.suppressed.lib and object C:\Forsbergsskola\Unreal\IndieProject\IndieProject\Plugins\SaveExtension\Intermediate\Build\Win64\UnrealEditor\Development\SaveExtensionTest\UnrealEditor-SaveExtensionTest.suppressed.exp
+[15/15] WriteMetadata UnrealEditor.target cancelled
+LogInit: Warning: Still incompatible or missing module: SaveExtension
+LogInit: Warning: Still incompatible or missing module: SaveExtensionEditor
+LogInit: Warning: Still incompatible or missing module: SaveExtensionTest
+LogCore: Engine exit requested (reason: EngineExit() was called)
+LogExit: Preparing to exit.
+LogVirtualization: UE::Virtualization was shutdown
+LogModuleManager: Shutting down and abandoning module DesktopPlatform (58)
+LogModuleManager: Shutting down and abandoning module PerforceSourceControl (56)
+LogModuleManager: Shutting down and abandoning module SourceControl (55)
+LogModuleManager: Shutting down and abandoning module PythonScriptPluginPreload (52)
+LogModuleManager: Shutting down and abandoning module PlatformCryptoOpenSSL (50)
+LogModuleManager: Shutting down and abandoning module PlatformCryptoTypes (48)
+LogModuleManager: Shutting down and abandoning module PlatformCrypto (46)
+LogModuleManager: Shutting down and abandoning module XGEController (44)
+LogXGEController: Cannot use XGE Controller as Incredibuild is not installed on this machine.
+LogXGEController: Cleaning working directory: C:/Users/Jesper/AppData/Local/Temp/UnrealXGEWorkingDir/
+LogModuleManager: Shutting down and abandoning module FastBuildController (42)
+LogModuleManager: Shutting down and abandoning module AnimationModifiers (40)
+LogModuleManager: Shutting down and abandoning module AudioEditor (38)
+LogModuleManager: Shutting down and abandoning module PropertyEditor (37)
+LogModuleManager: Shutting down and abandoning module Virtualization (34)
+LogModuleManager: Shutting down and abandoning module MessageLog (33)
+LogModuleManager: Shutting down and abandoning module TextureCompressor (30)
+LogModuleManager: Shutting down and abandoning module RenderCore (28)
+LogModuleManager: Shutting down and abandoning module Landscape (26)
+LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (24)
+LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (22)
+LogModuleManager: Shutting down and abandoning module Renderer (20)
+LogModuleManager: Shutting down and abandoning module Engine (18)
+LogModuleManager: Shutting down and abandoning module CoreUObject (16)
+LogModuleManager: Shutting down and abandoning module SandboxFile (14)
+LogModuleManager: Shutting down and abandoning module PakFile (12)
+LogModuleManager: Shutting down and abandoning module RSA (11)
+LogModuleManager: Shutting down and abandoning module NetworkFile (8)
+LogModuleManager: Shutting down and abandoning module StreamingFile (6)
+LogModuleManager: Shutting down and abandoning module CookOnTheFly (4)
+LogModuleManager: Shutting down and abandoning module StorageServerClient (2)
+LogExit: Exiting.
+Log file closed, 01/19/23 05:47:25
