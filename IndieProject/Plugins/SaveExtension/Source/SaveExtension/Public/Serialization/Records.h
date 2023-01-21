@@ -93,6 +93,9 @@ struct FActorRecord : public FObjectRecord
 	FTransform Transform;
 	FVector LinearVelocity = FVector::ZeroVector;
 	FVector AngularVelocity = FVector::ZeroVector;
+	TSoftObjectPtr<AActor> Owner;
+	TSoftObjectPtr<APawn> Instigator;
+	TSoftObjectPtr<USceneComponent> AttachParent;
 	TArray<FComponentRecord> ComponentRecords;
 
 

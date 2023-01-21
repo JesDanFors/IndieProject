@@ -57,6 +57,12 @@ bool FMTTask_SerializeActors::SerializeActor(const AActor* Actor, FActorRecord& 
 
 	Record.bHiddenInGame = Actor->IsHidden();
 	Record.bIsProcedural = Filter.IsProcedural(Actor);
+	Record.Instigator = Actor->GetInstigator();
+	Record.Owner = Actor->GetOwner();
+	if(Actor->GetRootComponent() && Actor->GetRootComponent()->GetAttachParent())
+	{
+		Record.AttachParent = Actor->GetRootComponent()->GetAttachParent();
+	}
 
 	if (Filter.StoresTags(Actor))
 	{
@@ -122,27 +128,22 @@ void FMTTask_SerializeActors::SerializeActorComponents(const AActor* Actor, FAct
 			FComponentRecord ComponentRecord;
 			ComponentRecord.Name = Component->GetFName();
 			ComponentRecord.Class = Component->GetClass();
-
-			if (Filter.StoresTransform(Component))
-			{
-				const USceneComponent* Scene = CastChecked<USceneComponent>(Component);
-				if (Scene->Mobility == EComponentMobility::Movable)
+			
+			const USceneComponent* Scene = Cast<USceneComponent>(Component);
+			if (Scene && Scene->Mobility == EComponentMobility::Movable)
 				{
 					ComponentRecord.Transform = Scene->GetRelativeTransform();
 				}
-			}
 
 			if (Filter.StoresTags(Component))
 			{
 				ComponentRecord.Tags = Component->ComponentTags;
 			}
 
-			if (!Component->GetClass()->IsChildOf<UPrimitiveComponent>())
-			{
-				FMemoryWriter MemoryWriter(ComponentRecord.Data, true);
-				FSEArchive Archive(MemoryWriter, false);
-				Component->Serialize(Archive);
-			}
+			FMemoryWriter MemoryWriter(ComponentRecord.Data, true);
+			FSEArchive Archive(MemoryWriter, false);
+			Component->Serialize(Archive);
+			
 			ActorRecord.ComponentRecords.Add(ComponentRecord);
 		}
 	}

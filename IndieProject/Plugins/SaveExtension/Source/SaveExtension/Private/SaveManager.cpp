@@ -5,8 +5,10 @@
 #include "FileAdapter.h"
 #include "LatentActions/LoadInfosAction.h"
 #include "Multithreading/DeleteSlotsTask.h"
+#include "Serialization/ArchiveSaveCompressedProxy.h"
 #include "Multithreading/LoadSlotInfosTask.h"
 #include "SaveSettings.h"
+#include "Serialization/ArchiveLoadCompressedProxy.h"
 #include "Serialization/SlotDataTask_LevelLoader.h"
 #include "Serialization/SlotDataTask_LevelSaver.h"
 #include "Serialization/SlotDataTask_Loader.h"
@@ -21,6 +23,8 @@
 #include <Kismet/GameplayStatics.h>
 #include <Misc/CoreDelegates.h>
 #include <Misc/Paths.h>
+
+#include "Serialization/BufferArchive.h"
 
 
 USaveManager::USaveManager() : Super(), MTTasks{} {}
@@ -75,7 +79,35 @@ bool USaveManager::SaveSlot(
 
 	// Saving
 	SELog(Preset, "Saving to Slot " + SlotName.ToString());
+	UWorld* World = GetWorld();
+	check(World);
 
+	// Launch task, always fail if it didn't finish or wasn't scheduled
+	auto* Task = CreateTask<USlotDataTask_Saver>()
+		->Setup(SlotName, bOverrideIfNeeded, bScreenshot, Size.Width, Size.Height)
+		->Bind(OnSaved)
+		->Start();
+
+	return Task->IsSucceeded() || Task->IsScheduled();
+}
+
+bool USaveManager::SaveSlotAdvance(FName SlotName, bool bOverrideIfNeeded, bool bScreenshot, const FScreenshotSize Size,
+	FOnGameSaved OnSaved)
+{
+	if (!CanLoadOrSave())
+		return false;
+
+	OnPreSave.Broadcast();
+
+	const USavePreset* Preset = GetPreset();
+	if (SlotName.IsNone())
+	{
+		SELog(Preset, "Advanced : Can't use an empty slot name to save.", true);
+		return false;
+	}
+
+	// Saving
+	SELog(Preset, "Advanced : Saving to Slot " + SlotName.ToString());
 	UWorld* World = GetWorld();
 	check(World);
 
@@ -89,6 +121,23 @@ bool USaveManager::SaveSlot(
 }
 
 bool USaveManager::LoadSlot(FName SlotName, FOnGameLoaded OnLoaded)
+{
+	if (!CanLoadOrSave() || !IsSlotSaved(SlotName))
+	{
+		return false;
+	}
+
+	TryInstantiateInfo();
+
+	auto* Task = CreateTask<USlotDataTask_Loader>()
+		->Setup(SlotName)
+		->Bind(OnLoaded)
+		->Start();
+
+	return Task->IsSucceeded() || Task->IsScheduled();
+}
+
+bool USaveManager::LoadSlotAdvance(FName SlotName, FOnGameLoaded OnLoaded)
 {
 	if (!CanLoadOrSave() || !IsSlotSaved(SlotName))
 	{
@@ -161,12 +210,199 @@ void USaveManager::BPSaveSlot(FName SlotName, bool bScreenshot, const FScreensho
 		if (LatentActionManager.FindExistingAction<FSaveGameAction>(
 				LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
+			IsAdvancedSave = false;
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
 				new FSaveGameAction(this, SlotName, bOverrideIfNeeded, bScreenshot, Size, Result, LatentInfo));
 		}
 		return;
 	}
 	Result = ESaveGameResult::Failed;
+}
+
+void USaveManager::BPSaveSlotAdvanced(FName SlotName, bool bScreenshot, const FScreenshotSize Size,
+	ESaveGameResult& Result, FLatentActionInfo LatentInfo, bool bOverrideIfNeeded)
+{
+	if (UWorld* World = GetWorld())
+	{
+		Result = ESaveGameResult::Saving;
+
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		if (LatentActionManager.FindExistingAction<FSaveGameAction>(
+				LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
+		{
+			IsAdvancedSave = true;
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
+				new FSaveGameAction(this, SlotName, bOverrideIfNeeded, bScreenshot, Size, Result, LatentInfo));
+		}
+		return;
+	}
+	Result = ESaveGameResult::Failed;
+}
+
+void USaveManager::BPSaveComponents(TArray<UActorComponent*> Components)
+{
+	//is no components return
+	if (Components.Num() <= 0)
+	{
+		//no components
+		return;
+	}
+	//First save the Pawn with which the components are associated
+	
+	APlayerController* LocalPlayerController = UGameplayStatics::GetPlayerController(GetWorld(),0);
+	if(LocalPlayerController)
+	{
+		FSRPawnData SRPawnData;
+		APawn* Pawn = LocalPlayerController->GetPawnOrSpectator();
+		if (Pawn)
+		{
+			
+			SerializeToBinary(Pawn,SRPawnData.SaveData.Data);
+			for (UActorComponent* Component : Components)
+			{
+				if (Component && Component->IsRegistered())
+				{
+					FSRComponentsData ComponentsDataArray;
+					ComponentsDataArray.Name = BytesFromString(Component->GetName());
+					USceneComponent* SceneComp = Cast<USceneComponent>(Component);
+					if (SceneComp)
+					{
+						ComponentsDataArray.RelativeTransform = SceneComp->GetRelativeTransform();
+					}
+					UChildActorComponent* ChildActorComp = Cast<UChildActorComponent>(Component);
+					if (ChildActorComp)
+					{
+						AActor* ChildActor = ChildActorComp->GetChildActor();
+						if (ChildActor)
+						{
+							SerializeToBinary(ChildActor, ComponentsDataArray.Data);
+						}
+					}
+					else
+					{
+						SerializeToBinary(Component, ComponentsDataArray.Data);
+					}
+					SRPawnData.SaveData.Components.Add(ComponentsDataArray);
+				}
+			}
+		}
+		FSRPlayerArchive PlayerArchive;
+		PlayerArchive.SavedPawn = SRPawnData;
+		FBufferArchive PlayerData;
+		PlayerData << PlayerArchive;
+
+		//Save the binary with FArchiveSaveCompressedProxy and also compress
+		TArray<uint8> CompressedData;
+		FArchiveSaveCompressedProxy Compressor = FArchiveSaveCompressedProxy(CompressedData, NAME_Zlib);
+		
+		FString SRBinaryFile = FPaths::ProjectSavedDir()+"SolidRiverBinary";
+		if (Compressor.GetError())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Cannot save, compressor error: %s"), *SRBinaryFile);
+		}
+
+		Compressor << PlayerData;
+		Compressor.Flush();
+
+		FFileHelper::SaveArrayToFile(CompressedData, *SRBinaryFile);
+
+		Compressor.FlushCache();
+		CompressedData.Empty();
+		Compressor.Close();
+
+		PlayerData.FlushCache();
+		PlayerData.Empty();
+		PlayerData.Close();
+
+	}
+
+}
+
+void USaveManager::BPLoadComponents(TArray<UActorComponent*> Components)
+{
+	FString SRBinaryFile = FPaths::ProjectSavedDir()+"SolidRiverBinary";
+	TArray<uint8> BinaryData;
+	if (!FFileHelper::LoadFileToArray(BinaryData, *SRBinaryFile))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s could not be loaded"), *SRBinaryFile);
+	}
+
+	if (BinaryData.Num() <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No binary data found for %s"), *SRBinaryFile);
+	}
+
+	//Decompress and load 
+
+	FArchiveLoadCompressedProxy Decompressor = FArchiveLoadCompressedProxy(BinaryData, NAME_Zlib);
+
+	if (Decompressor.GetError())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot load, file might not be compressed: %s"), *SRBinaryFile);
+	}
+
+	FBufferArchive DecompressedBinary;
+	Decompressor << DecompressedBinary;
+
+	FMemoryReader FromBinary = FMemoryReader(DecompressedBinary, true);
+	FromBinary.Seek(0);
+
+	//Unpack archive and do stuff
+	FSRPlayerArchive PlayerArchive;
+	FromBinary << PlayerArchive;
+	SavedPawn = PlayerArchive.SavedPawn;
+	Decompressor.FlushCache();
+	Decompressor.Close();
+
+	DecompressedBinary.Empty();
+	DecompressedBinary.Close();
+
+	BinaryData.Empty();
+
+	FromBinary.FlushCache();
+	FromBinary.Close();
+	//is no components return
+	if (Components.Num() <= 0)
+	{
+		//no components
+		return;
+	}
+	APlayerController* LocalPlayerController = UGameplayStatics::GetPlayerController(GetWorld(),0);
+	if(LocalPlayerController)
+	{
+		APawn* Pawn = LocalPlayerController->GetPawnOrSpectator();
+		if (Pawn)
+		{
+			FSRPawnData PawnData = SavedPawn;
+			SerializeFromBinary(Pawn, PawnData.SaveData.Data);
+			for (UActorComponent* Component : Components)
+			{
+				if (Component && Component->IsRegistered())
+				{
+					//Pawn data save data components = null
+					for (FSRComponentsData ComponentArray : PawnData.SaveData.Components)
+					{
+						if (ComponentArray.Name == BytesFromString(Component->GetName()))
+						{
+							UChildActorComponent* ChildActorComp = Cast<UChildActorComponent>(Component);
+							if (ChildActorComp)
+							{
+								AActor* ChildActor = ChildActorComp->GetChildActor();
+								if (ChildActor)
+								{
+									SerializeFromBinary(ChildActor, ComponentArray.Data);
+								}
+							}
+							else
+							{
+								SerializeFromBinary(Component, ComponentArray.Data);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void USaveManager::BPLoadSlot(
@@ -188,8 +424,27 @@ void USaveManager::BPLoadSlot(
 	Result = ELoadGameResult::Failed;
 }
 
+void USaveManager::BPLoadSlotAdvance(FName SlotName, ELoadGameResult& Result, FLatentActionInfo LatentInfo)
+{
+	if (UWorld* World = GetWorld())
+	{
+		Result = ELoadGameResult::Loading;
+
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		if (LatentActionManager.FindExistingAction<FLoadGameAction>(
+				LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
+		{
+			IsAdvancedLoad = true;
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
+				new FLoadGameAction(this, SlotName, Result, LatentInfo));
+		}
+		return;
+	}
+	Result = ELoadGameResult::Failed;
+}
+
 void USaveManager::BPLoadAllSlotInfos(const bool bSortByRecent, TArray<USlotInfo*>& SaveInfos,
-	ELoadInfoResult& Result, struct FLatentActionInfo LatentInfo)
+                                      ELoadInfoResult& Result, struct FLatentActionInfo LatentInfo)
 {
 	if (UWorld* World = GetWorld())
 	{
@@ -492,6 +747,42 @@ void USaveManager::OnMapLoadFinished(UWorld* LoadedWorld)
 	UpdateLevelStreamings();
 }
 
+TArray<uint8> USaveManager::BytesFromString(const FString& String)
+{
+	const uint32 Size = String.Len();
+
+	TArray<uint8> Bytes;
+	Bytes.AddUninitialized(Size);
+	StringToBytes(String, Bytes.GetData(), Size);
+
+	return Bytes;
+}
+
+FString USaveManager::StringFromBytes(const TArray<uint8>& Bytes)
+{
+	return BytesToString(Bytes.GetData(), Bytes.Num());
+}
+
+void USaveManager::SerializeToBinary(UObject* Object, TArray<uint8>& OutData)
+{
+	FMemoryWriter MemoryWriter(OutData, true);
+	FSaveGameArchive Ar(MemoryWriter);
+	Object->Serialize(Ar);
+
+	MemoryWriter.FlushCache();
+	MemoryWriter.Close();
+}
+
+void USaveManager::SerializeFromBinary(UObject* Object, const TArray<uint8>& InData)
+{
+	FMemoryReader MemoryReader(InData, true);
+	FSaveGameArchive Ar(MemoryReader);
+	Object->Serialize(Ar);
+
+	MemoryReader.FlushCache();
+	MemoryReader.Close();
+}
+
 UWorld* USaveManager::GetWorld() const
 {
 	check(GetGameInstance());
@@ -502,3 +793,4 @@ UWorld* USaveManager::GetWorld() const
 
 	return GetGameInstance()->GetWorld();
 }
+

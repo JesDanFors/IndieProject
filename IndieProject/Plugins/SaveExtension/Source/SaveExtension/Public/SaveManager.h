@@ -26,11 +26,92 @@
 #include "SaveManager.generated.h"
 
 
+struct FSRComponentsData;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameSavedMC, USlotInfo*, SlotInfo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameLoadedMC, USlotInfo*, SlotInfo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPreSave);
 
 
 struct FLatentActionInfo;
+
+//Head Struct
+USTRUCT()
+struct FSRHeadSaveData
+{
+	GENERATED_USTRUCT_BODY()
+
+	TArray<uint8> Data;
+	TArray<FSRComponentsData> Components;
+
+	friend FArchive& operator<<(FArchive& Ar, FSRHeadSaveData& HeadData)
+	{
+		Ar << HeadData.Data;
+		Ar << HeadData.Components;
+		return Ar;
+	}
+};
+
+//Pawn Data 
+USTRUCT()
+struct FSRPawnData
+{
+	GENERATED_USTRUCT_BODY()
+
+	FVector Position;
+	FRotator Rotation;
+	FSRHeadSaveData SaveData;
+
+	friend FArchive& operator<<(FArchive& Ar, FSRPawnData& PawnData)
+	{
+		Ar << PawnData.Position;
+		Ar << PawnData.Rotation;
+		Ar << PawnData.SaveData;
+		return Ar;
+	}
+};
+
+
+USTRUCT()
+struct FSRComponentsData
+{
+	GENERATED_USTRUCT_BODY()
+
+	TArray<uint8> Name;
+	FTransform RelativeTransform;
+	TArray<uint8> Data;
+
+	friend FArchive& operator<<(FArchive& Ar, FSRComponentsData& ComponentData)
+	{
+		Ar << ComponentData.Name;
+		Ar << ComponentData.RelativeTransform;
+		Ar << ComponentData.Data;
+		return Ar;
+	}
+};
+
+USTRUCT()
+struct FSRPlayerArchive
+{
+	GENERATED_USTRUCT_BODY()
+
+	FSRPawnData SavedPawn;
+	
+	friend FArchive& operator<<(FArchive& Ar, FSRPlayerArchive& PlayerArchive)
+	{
+		
+		Ar << PlayerArchive.SavedPawn;
+		return Ar;
+	}
+};
+
+struct FSaveGameArchive : public FObjectAndNameAsStringProxyArchive
+{
+	FSaveGameArchive(FArchive& InInnerArchive) : FObjectAndNameAsStringProxyArchive(InInnerArchive, true)
+	{
+		ArIsSaveGame = true; //Requires structs to be prepared for serialization(See SerializeStructProperties)
+		ArNoDelta = true;  //Allow to save default values
+	}
+};
 
 USTRUCT(BlueprintType)
 struct FScreenshotSize
@@ -107,6 +188,13 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 	virtual void Deinitialize() override;
+
+	//bool to define between states
+	bool IsAdvancedSave = false;
+
+	//bool to define between states
+	bool IsAdvancedLoad = false;
+	
 	/** End USubsystem */
 
 	void SetGameInstance(UGameInstance* GameInstance)
@@ -118,6 +206,10 @@ public:
 
 	/** Save the Game into an specified slot name */
 	bool SaveSlot(FName SlotName, bool bOverrideIfNeeded = true, bool bScreenshot = false,
+		const FScreenshotSize Size = {}, FOnGameSaved OnSaved = {});
+
+	/** Save the Game into an specified slot name with pre save caller */
+	bool SaveSlotAdvance(FName SlotName, bool bOverrideIfNeeded = true, bool bScreenshot = false,
 		const FScreenshotSize Size = {}, FOnGameSaved OnSaved = {});
 
 	/** Save the Game info an SlotInfo */
@@ -134,6 +226,9 @@ public:
 
 	/** Load game from a file name */
 	bool LoadSlot(FName SlotName, FOnGameLoaded OnLoaded = {});
+
+	/** Load game from a file name advanced*/
+	bool LoadSlotAdvance(FName SlotName, FOnGameLoaded OnLoaded = {});
 
 	/** Load game from a slot Id */
 	bool LoadSlot(int32 SlotId, FOnGameLoaded OnLoaded = {});
@@ -164,6 +259,7 @@ public:
 	void DeleteAllSlots(FOnSlotsDeleted Delegate);
 
 
+	
 	/** BLUEPRINT ONLY API */
 public:
 	// NOTE: This functions are mostly made to accommodate better Blueprint nodes that directly communicate
@@ -173,6 +269,11 @@ public:
 	UFUNCTION(Category = "SaveExtension|Saving", BlueprintCallable, meta = (AdvancedDisplay = "bScreenshot, Size",
 		DisplayName = "Save Slot", Latent, LatentInfo = "LatentInfo", ExpandEnumAsExecs = "Result", UnsafeDuringActorConstruction))
 	void BPSaveSlot(FName SlotName, bool bScreenshot, const FScreenshotSize Size, ESaveGameResult& Result, FLatentActionInfo LatentInfo, bool bOverrideIfNeeded = true);
+
+	/** Modified Saved Slot TODO write details comes with Presave callback */
+	UFUNCTION(Category = "SaveExtension|Saving", BlueprintCallable, meta = (AdvancedDisplay = "bScreenshot, Size",
+		DisplayName = "Save Slot Advanced", Latent, LatentInfo = "LatentInfo", ExpandEnumAsExecs = "Result", UnsafeDuringActorConstruction))
+	void BPSaveSlotAdvanced(FName SlotName, bool bScreenshot, const FScreenshotSize Size, ESaveGameResult& Result, FLatentActionInfo LatentInfo, bool bOverrideIfNeeded = true);
 
 	/** Save the Game into an specified Slot */
 	UFUNCTION(Category = "SaveExtension|Saving", BlueprintCallable, meta = (AdvancedDisplay = "bScreenshot, Size",
@@ -193,11 +294,25 @@ public:
 		BPSaveSlotByInfo(CurrentInfo, bScreenshot, Size, Result, MoveTemp(LatentInfo), true);
 	}
 
+	/** Save Components . basically targetting the customised character array */
+	UFUNCTION(Category = "SaveExtension|Saving", BlueprintCallable, DisplayName = "Save Components")
+	void BPSaveComponents(TArray<UActorComponent*> Components);
+
+	/** Load Components */
+	UFUNCTION(Category = "SaveExtension|Saving", BlueprintCallable, DisplayName = "Load Components")
+	void BPLoadComponents(TArray<UActorComponent*> Components);
+
 	/** Load game from a slot name */
 	UFUNCTION(BlueprintCallable, Category = "SaveExtension|Loading",
 		meta = (DisplayName = "Load Slot", Latent, LatentInfo = "LatentInfo",
 			ExpandEnumAsExecs = "Result", UnsafeDuringActorConstruction))
 	void BPLoadSlot(FName SlotName, ELoadGameResult& Result, FLatentActionInfo LatentInfo);
+
+	/** Load game from a slot name */
+	UFUNCTION(BlueprintCallable, Category = "SaveExtension|Loading",
+		meta = (DisplayName = "Load Slot Advance", Latent, LatentInfo = "LatentInfo",
+			ExpandEnumAsExecs = "Result", UnsafeDuringActorConstruction))
+	void BPLoadSlotAdvance(FName SlotName, ELoadGameResult& Result, FLatentActionInfo LatentInfo);
 
 	/** Load game from a slot Id */
 	UFUNCTION(BlueprintCallable, Category = "SaveExtension|Loading",
@@ -416,6 +531,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = SaveExtension)
 	FOnGameLoadedMC OnGameLoaded;
 
+	/** Is Called Before Save. Ideally it should be called before the save data is converted into Binary format */  
+	UPROPERTY(BlueprintAssignable, Category = SaveExtension)
+	FOnPreSave OnPreSave;
+
+	//Create a new slot function with pre save event which will stop the opening of new level
 
 	/** Subscribe to receive save and load events on an Interface */
 	UFUNCTION(Category = SaveExtension, BlueprintCallable)
@@ -436,7 +556,15 @@ private:
 
 	void IterateSubscribedInterfaces(TFunction<void(UObject*)>&& Callback);
 
+	// Solid River Events
+	//Conversion 
+	TArray<uint8> BytesFromString(const FString& String);
+	FString StringFromBytes(const TArray<uint8>& Bytes);
 
+	void SerializeToBinary(UObject* Object, TArray<uint8>& OutData);
+	void SerializeFromBinary(UObject* Object, const TArray<uint8>& InData);
+
+	FSRPawnData SavedPawn;
 	/***********************************************************************/
 	/* STATIC                                                              */
 	/***********************************************************************/

@@ -62,6 +62,12 @@ bool FActorRecord::Serialize(FArchive& Ar)
 	Ar.SerializeBits(&bIsProcedural, 1);
 
 	Ar << Transform;
+	
+	Ar << Owner;
+
+	Ar << Instigator;
+
+	Ar << AttachParent;
 
 	// Reduce memory footprint to 1 bool if not moving
 	bool bIsMoving = Ar.IsSaving() && (!LinearVelocity.IsNearlyZero() || !AngularVelocity.IsNearlyZero());

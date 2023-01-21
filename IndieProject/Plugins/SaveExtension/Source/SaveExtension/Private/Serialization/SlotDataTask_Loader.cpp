@@ -66,23 +66,27 @@ void USlotDataTask_Loader::OnStart()
 	// Cross-Level loading
 	// TODO: Handle empty Map as empty world
 	FName CurrentMapName { FSlotHelpers::GetWorldName(World) };
-	if (CurrentMapName != NewSlotInfo->Map)
+	if (!Manager->IsAdvancedLoad)
 	{
-		LoadState = ELoadDataTaskState::LoadingMap;
-		FString MapToOpen = NewSlotInfo->Map.ToString();
-		if (!GEngine->MakeSureMapNameIsValid(MapToOpen))
+		if (CurrentMapName != NewSlotInfo->Map)
 		{
-			UE_LOG(LogSaveExtension, Warning, TEXT("Slot '%s' was saved in map '%s' but it did not exist while loading. Corrupted save file?"), *NewSlotInfo->FileName.ToString(), *MapToOpen);
-			Finish(false);
+			LoadState = ELoadDataTaskState::LoadingMap;
+			FString MapToOpen = NewSlotInfo->Map.ToString();
+			if (!GEngine->MakeSureMapNameIsValid(MapToOpen))
+			{
+				UE_LOG(LogSaveExtension, Warning, TEXT("Slot '%s' was saved in map '%s' but it did not exist while loading. Corrupted save file?"), *NewSlotInfo->FileName.ToString(), *MapToOpen);
+				Finish(false);
+				return;
+			}
+
+			UGameplayStatics::OpenLevel(this, FName{ MapToOpen });
+
+			SELog(Preset, "Slot '" + SlotName.ToString() + "' is recorded on another Map. Loading before charging slot.", FColor::White, false, 1);
 			return;
 		}
-
-		UGameplayStatics::OpenLevel(this, FName{ MapToOpen });
-
-		SELog(Preset, "Slot '" + SlotName.ToString() + "' is recorded on another Map. Loading before charging slot.", FColor::White, false, 1);
-		return;
 	}
-	else if (IsDataLoaded())
+	SELog(Preset, "Slot '" + SlotName.ToString() + "' Advanced Load Abort opening the level.", FColor::White, false, 1);
+	if (IsDataLoaded())
 	{
 		StartDeserialization();
 	}
@@ -461,6 +465,13 @@ void USlotDataTask_Loader::RespawnActors(const TArray<FActorRecord*>& Records, c
 	SpawnInfo.NameMode = FActorSpawnParameters::ESpawnActorNameMode::Requested;
 
 	UWorld* const World = GetWorld();
+	FLevelRecord* LevelRecord = FindLevelRecord(CurrentSLevel.Get());
+	if (!LevelRecord)
+	{
+		return;
+	}
+
+	const auto& Filter = GetLevelFilter(*LevelRecord);
 
 	// Respawn all procedural actors
 	for (auto* Record : Records)
@@ -470,6 +481,26 @@ void USlotDataTask_Loader::RespawnActors(const TArray<FActorRecord*>& Records, c
 
 		// We update the name on the record in case it changed
 		Record->Name = NewActor->GetFName();
+
+		//Respawn Components
+		if (Filter.bStoreComponents)
+		{
+			auto SavedComponentsRecords = Record->ComponentRecords;
+			const TSet<UActorComponent*>& Components = NewActor->GetComponents();
+			for (auto* Component : Components)
+			{
+				const FComponentRecord* ComponentRecord = Record->ComponentRecords.FindByKey(Component);
+				if(ComponentRecord)
+				{
+					SavedComponentsRecords.RemoveSingle(*ComponentRecord);
+				}
+			}
+			for (auto ComponentRecord : SavedComponentsRecords)
+			{
+				auto Component = NewActor->AddComponentByClass(ComponentRecord.Class,false,ComponentRecord.Transform,false);
+				Component->Rename(*ComponentRecord.Name.ToString());
+			}
+		}
 	}
 }
 
@@ -511,6 +542,18 @@ bool USlotDataTask_Loader::DeserializeActor(AActor* Actor, const FActorRecord& R
 
 	// Always load saved tags
 	Actor->Tags = Record.Tags;
+	if(Record.Owner.IsValid())
+	{
+		Actor->SetOwner(Record.Owner.Get());
+	}
+	if(Record.Instigator.IsValid())
+	{
+		Actor->SetInstigator(Record.Instigator.Get());
+	}
+	if(Record.AttachParent.IsValid())
+	{
+		Actor->AttachToComponent(Record.AttachParent.Get(),FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, false));
+	}
 
 	const bool bSavesPhysics = FSELevelFilter::StoresPhysics(Actor);
 	if (FSELevelFilter::StoresTransform(Actor))
@@ -534,14 +577,14 @@ bool USlotDataTask_Loader::DeserializeActor(AActor* Actor, const FActorRecord& R
 
 	Actor->SetActorHiddenInGame(Record.bHiddenInGame);
 
-	DeserializeActorComponents(Actor, Record, Filter, 2);
-
 	{
 		//Serialize from Record Data
 		FMemoryReader MemoryReader(Record.Data, true);
 		FSEArchive Archive(MemoryReader, false);
 		Actor->Serialize(Archive);
 	}
+
+	DeserializeActorComponents(Actor, Record, Filter, 2);
 
 	return true;
 }
@@ -551,6 +594,8 @@ void USlotDataTask_Loader::DeserializeActorComponents(AActor* Actor, const FActo
 	if (Filter.bStoreComponents)
 	{
 		TRACE_CPUPROFILER_EVENT_SCOPE(UUSlotDataTask_Loader::DeserializeActorComponents);
+
+		//auto SavedComponentsRecords = ActorRecord.ComponentRecords;
 
 		const TSet<UActorComponent*>& Components = Actor->GetComponents();
 		for (auto* Component : Components)
@@ -564,31 +609,53 @@ void USlotDataTask_Loader::DeserializeActorComponents(AActor* Actor, const FActo
 			const FComponentRecord* Record = ActorRecord.ComponentRecords.FindByKey(Component);
 			if (!Record)
 			{
-				SELog(Preset, "Component '" + Component->GetFName().ToString() + "' - Record not found", FColor::Red, false, Indent + 1);
+				//SELog(Preset, "Component '" + Component->GetFName().ToString() + "' - Record not found", FColor::Red, false, Indent + 1);
 				continue;
 			}
+			
+			//SavedComponentsRecords.RemoveSingle(*Record);
 
-			if (FSELevelFilter::StoresTransform(Component))
+			//if (FSELevelFilter::StoresTransform(Component))
+			//{
+			USceneComponent* Scene = Cast<USceneComponent>(Component);
+			if (Scene && Scene->Mobility == EComponentMobility::Movable)
 			{
-				USceneComponent* Scene = CastChecked<USceneComponent>(Component);
-				if (Scene->Mobility == EComponentMobility::Movable)
-				{
-					Scene->SetRelativeTransform(Record->Transform);
-				}
+				Scene->SetRelativeTransform(Record->Transform);
 			}
+			//}
 
 			if (FSELevelFilter::StoresTags(Component))
 			{
 				Component->ComponentTags = Record->Tags;
 			}
 
+			FMemoryReader MemoryReader(Record->Data, true);
+			FSEArchive Archive(MemoryReader, false);
+			Component->Serialize(Archive);
+			/*
 			if (!Component->GetClass()->IsChildOf<UPrimitiveComponent>())
 			{
 				FMemoryReader MemoryReader(Record->Data, true);
 				FSEArchive Archive(MemoryReader, false);
 				Component->Serialize(Archive);
 			}
+			*/
 		}
+		/*
+		for (auto ComponentRecord : SavedComponentsRecords)
+		{
+			auto Component = Actor->AddComponentByClass(ComponentRecord.Class,false,ComponentRecord.Transform,false);
+
+			if (FSELevelFilter::StoresTags(Component))
+			{
+				Component->ComponentTags = ComponentRecord.Tags;
+			}
+			FMemoryReader MemoryReader(ComponentRecord.Data, true);
+			FSEArchive Archive(MemoryReader, false);
+			Component->Serialize(Archive);
+			Component->Rename(*ComponentRecord.Name.ToString());
+		}
+		*/
 	}
 }
 

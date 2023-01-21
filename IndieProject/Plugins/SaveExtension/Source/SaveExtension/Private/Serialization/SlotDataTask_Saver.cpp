@@ -92,14 +92,16 @@ void USlotDataTask_Saver::OnStart()
 			SlotData->TimeSeconds = World->TimeSeconds;
 		}
 
-		//Save Level info in both files
-		SlotInfo->Map = FName{ FSlotHelpers::GetWorldName(World) };
-		SlotData->Map = SlotData->Map;
+		if(!Manager->isAdvancedSave)
+		{
+			SlotInfo->Map = FName{ FSlotHelpers::GetWorldName(World) };
+			SlotData->Map = SlotData->Map;
+			SlotData->bStoreGameInstance = Preset->bStoreGameInstance;
+			SlotData->GeneralLevelFilter = Preset->ToFilter();
 
-		SlotData->bStoreGameInstance = Preset->bStoreGameInstance;
-		SlotData->GeneralLevelFilter = Preset->ToFilter();
+			SerializeWorld();
+		}
 
-		SerializeWorld();
 		SaveFile();
 		return;
 	}

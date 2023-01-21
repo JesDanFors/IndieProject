@@ -12,7 +12,15 @@ FLoadGameAction::FLoadGameAction(USaveManager* Manager, FName SlotName, ELoadGam
 	, OutputLink(LatentInfo.Linkage)
 	, CallbackTarget(LatentInfo.CallbackTarget)
 {
-	const bool bStarted = Manager->LoadSlot(SlotName, FOnGameLoaded::CreateRaw(this, &FLoadGameAction::OnLoadFinished));
+	bool bStarted;
+	if(Manager->IsAdvancedLoad)
+	{
+		bStarted = Manager->LoadSlotAdvance(SlotName, FOnGameLoaded::CreateRaw(this, &FLoadGameAction::OnLoadFinished));
+	}
+	else
+	{
+		bStarted = Manager->LoadSlot(SlotName, FOnGameLoaded::CreateRaw(this, &FLoadGameAction::OnLoadFinished));
+	}
 	if (!bStarted)
 	{
 		Result = ELoadGameResult::Failed;
